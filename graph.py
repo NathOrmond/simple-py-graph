@@ -3,13 +3,15 @@
 """Simple tool for plotting graphs using python """
 
 # Required modules 
+import numpy as np
 import matplotlib.pyplot as plt 
 
-graph = Graph()
-graph.add_coordinate_series([1,2,3], [2,4,1])
-graph.set_x_label("x axis")
-graph.set_y_label("y axis")
-graph.set_title("Test Graph")
+#Test Code
+#graph = Graph()
+#graph.add_coordinate_series([1,2,3], [2,4,1])
+#graph.set_x_label("x axis")
+#graph.set_y_label("y axis")
+#graph.set_title("Test Graph")
 
 #Graph class, simply runs/draws graph
 class Graph:
@@ -63,6 +65,7 @@ class Graph:
 
     def set_y_label(self, ylabel):
         self.ylabel = ylabel
+        
 ######################################################### 
 
 # Dunder
