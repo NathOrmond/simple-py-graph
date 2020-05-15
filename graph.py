@@ -6,70 +6,55 @@
 import numpy as np
 import matplotlib.pyplot as plt 
 
-#Test Code
-#graph = Graph()
-#graph.add_coordinate_series([1,2,3], [2,4,1])
-#graph.set_x_label("x axis")
-#graph.set_y_label("y axis")
-#graph.set_title("Test Graph")
-
-#Graph class, simply runs/draws graph
-class Graph:
+#GraphRenderer class, simply runs/draws graph
+class GraphRenderer:
     def __init__(self):
-        self.num_lines = 0
-        self.x_series = []
-        self.y_series = []
-        self.xlabel = ""
-        self.ylabel = ""
-        self.title = ""
+        self.all_series = []
 
-    def draw_graph(self):
-        for index in self.num_lines:
-            plt.plot(self.x_series.get(index), self.y_series.get(index))
-        plt.xlabel(self.xlabel)
-        plt.ylabel(self.ylabel)
-        plt.title(self.title)
+    def draw_graph(self, title, xlabel, ylabel):
+        for series in self.all_series:
+            #Format: plt.plot(x series, y series, colour e.g. 'b' , label='blue')
+            print(series[2])
+            plt.plot(series[0], series[1],label=series[2])
+        plt.title(title)
+        plt.xlabel(ylabel)
+        plt.ylabel(xlabel)
+        plt.legend()
         plt.show()
 
-    def add_coordinate_series(self, x_series, y_series):
-        self.x_series.append(x_series)
-        self.y_series.append(y_series)
-        self.num_lines += 1
+    def add_coordinate_series(self, x_series, y_series, label):
+        self.all_series.append([x_series, y_series, label])
 
-    def get_title(self):
-        return self.title
 
-    def set_title(self, title):
-        self.title = title
+def engineer_cost_f():
+    xarray = []
+    yarray = []
+    for x in range((52 * 1)):
+        yarray.append(50 * 5.7 * x)
+        xarray.append(x)
+    return [xarray, yarray]
 
-    def get_x_series(self):
-        return self.x_series
+def api_call_cost_f(n):
+    xarray = []
+    yarray = []
+    for x in range(52 * 1):
+        yarray.append(0.01 * 12 * 24 * 7 * x * n)
+        xarray.append(x)
+    return  [xarray, yarray]
 
-    def set_x_series(self, x_series):
-        self.x_series = x_series
-
-    def get_y_series(self):
-        return self.y_series
-    
-    def set_y_series(self, y_series):
-        self.y_series = y_series
-
-    def get_X_label(self):
-        return self.xlabel
-
-    def set_X_label(self, xlabel):
-        self.xlabel = xlabel
-
-    def get_y_label(self):
-        return self.ylabel
-
-    def set_y_label(self, ylabel):
-        self.ylabel = ylabel
-        
 ######################################################### 
-
-# Dunder
 # Run code if compiled as python script from command line
 # Otherwise import module.
-#if __name__ == '__main__':
-    #TODO
+if __name__ == '__main__':
+    graph = GraphRenderer()
+    #Format: plt.plot(x series, y series, colour e.g. 'b' , label='blue')
+    arr1 = engineer_cost_f()
+    graph.add_coordinate_series(arr1[0], arr1[1], "engineer costs")
+
+    arr2 = api_call_cost_f(1)
+    graph.add_coordinate_series(arr2[0], arr2[1], "one ship API")
+
+    arr3 = api_call_cost_f(15)
+    graph.add_coordinate_series(arr3[0], arr3[1], "fifteen ships API")
+
+    graph.draw_graph("Cost and Revenue Predictions", "revenue / £", "time / weeks")
